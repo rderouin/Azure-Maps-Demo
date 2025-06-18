@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",                      // Or "pwa-chrome" for newer setups
+      "request": "launch",
+      "name": "Launch Live Server (Chrome)",
+      "url": "http://127.0.0.1:5500/AzureMapsDemo.html",  // <--- Update this to match your Live Server URL
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}
