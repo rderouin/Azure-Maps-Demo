@@ -15,6 +15,11 @@
     <!-- Reference to the Azure Maps Map control javascript and css files -->
     <link href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/3/atlas.min.css" rel="stylesheet" />
     <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/3/atlas.min.js"></script>
+
+    <!-- Reference to the Azure Maps Map drawing tools javascript and css fiels-->
+    <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/drawing/1/atlas-drawing.min.css" type="text/css" />
+    <script src="https://atlas.microsoft.com/sdk/javascript/drawing/1/atlas-drawing.min.js"></script>
+
      <!-- Load runtime env first -->
     <script src="env.js"></script>
 
@@ -60,7 +65,8 @@
             map.events.add('ready',function(){
                 //Create zoom control and add it to the map.
                 enableMapControls(map);
-                enableCoordinateDisplay(map)
+                enableCoordinateDisplay(map);
+                enableDrawingTools(map);
 
                 // Add a style selector to the map.
                 addStyleSelector();
@@ -174,6 +180,21 @@
             select.addEventListener('change', function() {
                 map.setStyle({ style: this.value });
             });
+        }
+
+        // Enable drawing tools for polygon creation
+        function enableDrawingTools(mapInstance) {
+            // Create a drawing manager and display the drawing toolbar
+            drawingManager = new atlas.drawing.DrawingManager(map,{
+                mode: "draw-polygon",
+                interactionType: "freehand",
+                toolbar: new atlas.control.DrawingToolbar({
+                    position: 'bottom-right',
+                    visible: true,
+                    style: 'dark'
+                }),
+            });
+
         }
      </script>
 <style>
