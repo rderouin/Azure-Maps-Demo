@@ -28,7 +28,7 @@
 
     <!-- Maps SDK variables or config -->
      <script>
-        var map, datasource, popup, searchInput, resultsPanel, searchInputLength, centerMapOnResults;
+        var map, drawingManager, datasource, popup, searchInput, resultsPanel, searchInputLength, centerMapOnResults;
         // Configurable URL for the GeoJSON data. 
         // Update this value as needed for your environment.
         const geoJsonUrl = 'http://127.0.0.1:5500/BASFGeoJSON.json'; // Local development URL
@@ -196,10 +196,30 @@
             });
 
         }
+
+        // Function to get drawn shapes from the drawing manager
+        // and display them in the CodeOutput textarea.
+        function getDrawnShapes() {
+            var source = drawingManager.getSource();
+            
+            document.getElementById('CodeOutput').value = JSON.stringify(source.toJson(), null, '    ');
+        }
      </script>
 <style>
     html, body { margin: 0; padding: 0; height: 100%; width: 100%; }
-     #myMap {height: 100vh;width: 100vw;}
+    #sidePanel {
+            width: 350px;
+            height: 580px;
+            float: left;
+            margin-right: 10px;
+    }
+     #myMap {
+            position: relative;
+            width: calc(100% - 360px);
+            min-width: 290px;
+            height: 100vh;
+            float: left;
+    }
      #coordDisplay {
          position: absolute;
          bottom: 10px;
@@ -212,12 +232,25 @@
          box-shadow: 0 1px 4px rgba(0,0,0,0.3);
          z-index: 1000;
      }
+    #CodeOutput {
+        width: 340px;
+        height: 450px;
+        overflow-y: auto;
+    }
      
  </style>
-
 </head>
 <body onload="InitMap()">
     <div id="myMap"></div>
+    <div id="sidePanel">
+        <fieldset style="width:320px;margin-bottom:10px;">
+            <legend>Get drawn shapes from drawing manager</legend>
+            This sample shows how to get the shapes that have been drawn on the map using the drawing managers <b>drawingManager.getSource()</b> function.
+        </fieldset>
+
+        <input type="button" value="Get drawn shapes" onclick="getDrawnShapes()" title="Get drawn shapes"/>
+        <textarea id="CodeOutput" title="Code Output"></textarea>
+    </div>
     <div id="coordDisplay">
         Hover over the map to see coordinates
     </div>
